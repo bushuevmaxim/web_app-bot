@@ -132,7 +132,7 @@ class _NewQuestionPageState extends State<NewQuestionPage> {
 
   void _backToMainReturnQuestion() {
     final String name = _nameController.text;
-    final String answer = _nameController.text;
+    final String answer = _answerController.text;
 
     QuestionModel result = QuestionModel(name, answer, listQuestions);
     Navigator.of(context).pop(result);
