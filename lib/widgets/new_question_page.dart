@@ -1,21 +1,28 @@
+import 'package:admin_panel_for_bot/api_client/dio_client.dart';
 import 'package:admin_panel_for_bot/classes/question_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../main.dart';
-import 'card_question.dart';
 
-class NewQuestionPage extends StatefulWidget {
+class NewQuestionPage extends ConsumerStatefulWidget {
   const NewQuestionPage({super.key});
 
   @override
-  State<NewQuestionPage> createState() => _NewQuestionPageState();
+  ConsumerState<NewQuestionPage> createState() => _NewQuestionPageState();
 }
 
-class _NewQuestionPageState extends State<NewQuestionPage> {
+class _NewQuestionPageState extends ConsumerState<NewQuestionPage> {
   final List<String> listQuestions = [];
   final _nameController = TextEditingController();
   final _exampleQuestionController = TextEditingController();
   final _answerController = TextEditingController();
+  late final DioClient dio;
+  @override
+  void initState() {
+    dio = ref.read(dioProvider);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,12 +137,14 @@ class _NewQuestionPageState extends State<NewQuestionPage> {
     }
   }
 
-  void _backToMainReturnQuestion() {
+  void _backToMainReturnQuestion() async {
     final String name = _nameController.text;
     final String answer = _answerController.text;
 
     QuestionModel result = QuestionModel(name, answer, listQuestions);
-    Navigator.of(context).pop(result);
+    Navigator.of(context).pop();
+    await dio.addQuestion(result);
+    ref.refresh(questionProvider.future);
   }
 
   void _deleteQuastion(int index) {

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../classes/question_model.dart';
 import '../main.dart';
 
-class DetailedQuestionPage extends StatefulWidget {
+class DetailedQuestionPage extends ConsumerStatefulWidget {
   final QuestionModel question;
   const DetailedQuestionPage({super.key, required this.question});
   @override
-  State<DetailedQuestionPage> createState() => _DetailedQuestionPageState();
+  ConsumerState<DetailedQuestionPage> createState() =>
+      _DetailedQuestionPageState();
 }
 
-class _DetailedQuestionPageState extends State<DetailedQuestionPage> {
+class _DetailedQuestionPageState extends ConsumerState<DetailedQuestionPage> {
   final _nameController = TextEditingController();
   final _exampleQuestionController = TextEditingController();
   final _answerController = TextEditingController();
   late QuestionModel curentQuestion;
+
   List<String>? listQuestions;
   @override
   void initState() {
@@ -23,6 +26,7 @@ class _DetailedQuestionPageState extends State<DetailedQuestionPage> {
         List<String>.from(curentQuestion.exampleQuestionList as Iterable);
     _nameController.text = curentQuestion.name;
     _answerController.text = curentQuestion.answer;
+
     super.initState();
   }
 
@@ -138,12 +142,16 @@ class _DetailedQuestionPageState extends State<DetailedQuestionPage> {
     setState(() {});
   }
 
-  void _saveChanges() {
+  void _saveChanges() async {
     curentQuestion.exampleQuestionList =
         List<String>.from(listQuestions as Iterable);
     curentQuestion.name = _nameController.text;
     curentQuestion.answer = _answerController.text;
-
     Navigator.of(context).pop(true);
+    await ref.watch(dioProvider).changeQuestion(QuestionModel(
+        curentQuestion.name,
+        curentQuestion.answer,
+        curentQuestion.exampleQuestionList));
+    ref.refresh(questionProvider);
   }
 }

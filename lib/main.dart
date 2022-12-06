@@ -1,10 +1,20 @@
+import 'package:admin_panel_for_bot/api_client/dio_client.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'widgets/home_page.dart';
 
 void main() {
-  runApp(AdminPanelApp());
+  runApp(ProviderScope(child: AdminPanelApp()));
 }
+
+final dioProvider = Provider((ref) => DioClient('http://127.0.0.1:8000'));
+final questionProvider = FutureProvider((ref) {
+  final dio = ref.read(dioProvider);
+
+  final list = dio.getListQuestions();
+  return list;
+});
 
 class AdminPanelApp extends StatelessWidget {
   AdminPanelApp({Key? key}) : super(key: key);
@@ -134,11 +144,11 @@ class _ExampleSidebarXState extends State<ExampleSidebarX> {
       ),
       footerDivider: divider,
       headerBuilder: (context, extended) {
-        return SizedBox(
+        return const SizedBox(
           height: 100,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/images/avatar.png'),
+            padding: EdgeInsets.all(16.0),
+            child: Spacer(),
           ),
         );
       },
