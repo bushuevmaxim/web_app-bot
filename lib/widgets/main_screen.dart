@@ -138,6 +138,7 @@ class _MainScreenState extends ConsumerState<ConsumerStatefulWidget> {
   void _deleteQuastion(QuestionModel questionModel) async {
     await dio.deleteQuestion(questionModel);
 
+    // ignore: unused_result
     ref.refresh(questionProvider.future);
   }
 

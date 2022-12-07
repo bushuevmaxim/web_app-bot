@@ -43,6 +43,10 @@ dependencies:
   
   json_annotation: ^4.7.0
   flutter_riverpod: ^2.1.1
+  grouped_list: ^5.1.2
+  intl: ^0.17.0
+  
+  flutter_linkify: ^5.0.2
 
 dev_dependencies:
   flutter_test:

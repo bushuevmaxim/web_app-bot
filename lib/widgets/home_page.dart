@@ -1,3 +1,4 @@
+import 'package:admin_panel_for_bot/widgets/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'main_screen.dart';
@@ -32,7 +33,7 @@ class _ScreensState extends State<ScreensExample> {
           case 0:
             return const MainScreen();
           case 1:
-
+            return const ChatScreen();
           default:
             return Text(
               pageTitle,
