@@ -108,7 +108,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     setState(() {});
     final Message answer;
     Dio dio = Dio(BaseOptions(
-        baseUrl: 'http://localhost:5005 ',
+        baseUrl: 'https://9f6a-89-178-238-142.eu.ngrok.io/',
         responseType: ResponseType.json,
         headers: {
           'Content-Type': 'application/json',

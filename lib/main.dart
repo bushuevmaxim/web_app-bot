@@ -8,7 +8,8 @@ void main() {
   runApp(ProviderScope(child: AdminPanelApp()));
 }
 
-final dioProvider = Provider((ref) => DioClient('http://127.0.0.1:8000'));
+final dioProvider =
+    Provider((ref) => DioClient('https://4c47-89-178-238-142.eu.ngrok.io/'));
 final questionProvider = FutureProvider((ref) {
   final dio = ref.read(dioProvider);
 
@@ -144,12 +145,9 @@ class _ExampleSidebarXState extends State<ExampleSidebarX> {
       ),
       footerDivider: divider,
       headerBuilder: (context, extended) {
-        return const SizedBox(
+        return Container(
+          decoration: const BoxDecoration(color: Colors.transparent),
           height: 100,
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Spacer(),
-          ),
         );
       },
       items: [
