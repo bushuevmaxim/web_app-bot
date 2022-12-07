@@ -22,6 +22,7 @@ class ChatScreen extends ConsumerStatefulWidget {
 class _ChatScreenState extends ConsumerState<ChatScreen> {
   final List<Message> messages = [];
   final inputController = TextEditingController();
+  final inputFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     final isSmallScreen = MediaQuery.of(context).size.width < 600;
@@ -41,6 +42,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   elements: messages,
                   groupHeaderBuilder: (element) => SizedBox(
                     height: 40,
+                    width: 20,
                     child: Align(
                       alignment: Alignment.center,
                       child: Card(
@@ -81,6 +83,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 height: 20,
               ),
               TextField(
+                focusNode: inputFocusNode,
                 onSubmitted: (text) => _sendMessege(),
                 controller: inputController,
                 decoration: InputDecoration(
@@ -105,7 +108,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     setState(() {});
     final Message answer;
     Dio dio = Dio(BaseOptions(
-        baseUrl: 'https://8a1c-89-178-238-142.eu.ngrok.io/',
+        baseUrl: 'http://localhost:5005 ',
         responseType: ResponseType.json,
         headers: {
           'Content-Type': 'application/json',
@@ -121,6 +124,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           DateTime.now(), false);
     }
     inputController.clear();
+    inputFocusNode.requestFocus();
     messages.add(answer);
     setState(() {});
   }
