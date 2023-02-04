@@ -105,10 +105,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     final message =
         Message(inputController.text.toString(), DateTime.now(), true);
     messages.add(message);
+    inputController.clear();
+    inputFocusNode.requestFocus();
     setState(() {});
     final Message answer;
     Dio dio = Dio(BaseOptions(
-        baseUrl: 'https://9f6a-89-178-238-142.eu.ngrok.io/',
+        baseUrl: 'http://localhost:5005/',
         responseType: ResponseType.json,
         headers: {
           'Content-Type': 'application/json',
@@ -123,8 +125,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       answer = Message('Автоотвечик: я отдыхаю и не могу вам ответить',
           DateTime.now(), false);
     }
-    inputController.clear();
-    inputFocusNode.requestFocus();
+
     messages.add(answer);
     setState(() {});
   }

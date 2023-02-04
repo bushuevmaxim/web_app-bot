@@ -8,8 +8,7 @@ void main() {
   runApp(ProviderScope(child: AdminPanelApp()));
 }
 
-final dioProvider =
-    Provider((ref) => DioClient('https://4c47-89-178-238-142.eu.ngrok.io/'));
+final dioProvider = Provider((ref) => DioClient('http://localhost:8000/'));
 final questionProvider = FutureProvider((ref) {
   final dio = ref.read(dioProvider);
 
